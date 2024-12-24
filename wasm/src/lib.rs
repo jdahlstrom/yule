@@ -17,20 +17,20 @@ use re::math::rand::Distrib;
 use re::prelude::tex::{Atlas, Layout, SamplerClamp};
 use re::render::render;
 use re::util::pnm::parse_pnm;
-use re_front::dims::QVGA_1280_960;
+use re_front::dims::XGA_1024_768;
 use re_front::wasm::Window;
 
 #[wasm_bindgen(start)]
 fn main() {
-    let res = (1280, 720);
+    let res = XGA_1024_768;
     let mut win = Window::new(res).unwrap();
 
     let tex = *include_bytes!("../../assets/flakes.pgm");
-
     let tex = parse_pnm(tex).unwrap();
 
     let font = *include_bytes!("../../assets/font_16x24.pbm");
     let font = parse_pnm(font).unwrap();
+
     let (cw, ch) = (font.width() / 16, font.height() / 16);
     let font = Atlas::new(Layout::Grid(cw, ch), font);
 
@@ -53,14 +53,14 @@ fn main() {
     .map(|(pos, uv): (Point3<Model>, _)| vertex(pos - vec3(0.5, 0.5, 0.0), uv));
 
     let proj =
-        perspective(1.0, win.dims.0 as f32 / win.dims.1 as f32, 0.1..1000.0);
+        perspective(1.0, res.0 as f32 / res.1 as f32, 0.1..1000.0);
     let to_screen = viewport(pt2(0, 0)..pt2(res.0, res.1));
 
     let mut rng = rand::DefaultRng::default();
 
     const N: usize = 300;
 
-    let mut vecs = rand::Uniform(splat(-1.0)..splat(1.0));
+    let vecs = rand::Uniform(splat(-1.0)..splat(1.0));
     let ps: Vec<Vec3> = vecs.samples(&mut rng).take(N).collect();
     let vs: Vec<Vec3> = vecs.samples(&mut rng).take(N).collect();
 
@@ -137,7 +137,7 @@ fn main() {
             |frag: Frag<TexCoord>| {
                 Some(SamplerClamp.sample(&text, frag.var).to_rgba())
                     .filter(|c| c.r() > 0)
-                    .map(|_| rgba(0x33, 0x44, 0xCC, 0xFF))
+                    .map(|_| rgba(0x11, 0x00, 0xCC, 0xFF))
             },
         );
         let secs = frame.t.as_secs_f32();
