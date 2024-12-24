@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Greetz</title>
+    <style>
+        body {
+            background: black;
+            width: 1280px;
+            padding: 32px 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import init from './pkg/yule.js';
+
+    async function run() {
+        await init();
+    }
+
+    run();
+</script>
+<noscript>
+    This page contains webassembly and javascript content
+    and does not work with javascript disabled.
+</noscript>
+</body>
+</html>
