@@ -34,7 +34,7 @@ fn main() {
     let (cw, ch) = (font.width() / 16, font.height() / 16);
     let font = Atlas::new(Layout::Grid(cw, ch), font);
 
-    let text = b"\x0F Iloista joulua! \x0F";
+    let text = b"\x0F Iloista vuotta 2025! \x0F";
 
     let mut buf = Buf2::new((cw * text.len() as u32, ch));
     for (&c, x) in zip(text, 0..) {
